@@ -51,11 +51,29 @@ async function remove(id){
      }
 }
 
+function addStep(step, scheme_id){
+     const newStep = {
+          ...step,
+          scheme_id: scheme_id
+     }
+     return db('steps')
+     .join('schemes')
+     .where('schemes.id', scheme_id)
+     .insert(newStep)
+          .then(newScheme => {
+               console.log(newScheme)
+          })
+          .catch(err => {
+               console.log(err)
+          })
+}
+
 module.exports = {
      find,
      findById,
      findSteps,
      add,
      update,
-     remove
+     remove,
+     addStep
 }

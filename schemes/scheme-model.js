@@ -26,10 +26,36 @@ function add(scheme){
                })
 }
 
+function update(changes, id){
+     return db('schemes')
+          .where('id', id)
+          .update(changes)
+               .then(updatedScheme => {
+                    return changes
+               })
+}
+
+async function remove(id){
+     try {
+          const deletedScheme = await findById(id)
+          return db('schemes')
+          .where('id', id)
+          .first()
+          .del(id)
+               .then(deleted => {
+                    return deletedScheme
+               })
+     }
+     catch(err){
+          console.log(err)
+     }
+}
 
 module.exports = {
      find,
      findById,
      findSteps,
-     add
+     add,
+     update,
+     remove
 }
